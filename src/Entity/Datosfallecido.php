@@ -12,6 +12,123 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Datosfallecido
 {
+
+    const SELECTFIELD = array(
+        0 => [
+            'label' => 'Nombre Administradora Seguridad',
+            'field' => 'idadministradoraseguridad',
+            'class' => Administradoraseguridad::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        1 => [
+            'label' => 'Sitio Defunción',
+            'field' => 'idsitiodefuncion',
+            'class' => Sitiodefuncion::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        2 => [
+            'label' => 'Nombre Institución',
+            'field' => 'idinstitucion',
+            'class' => Institucion::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        3 => [
+            'label' => 'Tipo Documento',
+            'field' => 'idtipodocumento',
+            'class' => Tipodocumento::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        4 => [
+            'label' => 'Municipio Residencia',
+            'field' => 'idmunicipio',
+            'class' => Municipio::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        5 => [
+            'label' => 'Estado Civil Fallecido',
+            'field' => 'idestadocivil',
+            'class' => Estadocivil::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        6 => [
+            'label' => 'Ocupación',
+            'field' => 'idocupacion',
+            'class' => Ocupacion::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        7 => [
+            'label' => 'Causa Directa de Muerte',
+            'field' => 'idcausadirecta',
+            'class' => Causadirecta::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        8 => [
+            'label' => 'Causa Probable de Muerte',
+            'field' => 'idprobablemaneramuerte',
+            'class' => Probablemaneramuerte::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        9 => [
+            'label' => 'Nivel Académico',
+            'field' => 'idniveleducativo',
+            'class' => Niveleducativo::class,
+            'expanded' => false,
+            'multiple' => false,
+        ],
+        10 => [
+            'label' => 'Aréa Residencia',
+            'field' => 'IdNombreArea',
+            'class' => Area::class,
+            'expanded' => true,
+            'multiple' => false,
+        ],
+        11 => [
+            'label' => 'Tipo Defunción',
+            'field' => 'idtipodefuncion',
+            'class' => Tipodefuncion::class,
+            'expanded' => true,
+            'multiple' => false,
+        ],
+        12 => [
+            'label' => 'Género Fallecido',
+            'field' => 'idsexo',
+            'class' => Sexo::class,
+            'expanded' => true,
+            'multiple' => false,
+        ],
+        13 => [
+            'label' => 'Régimen de seguridad',
+            'field' => 'idregimenseguridad',
+            'class' => Regimenseguridad::class,
+            'expanded' => true,
+            'multiple' => false,
+        ],
+        14 => [
+            'label' => '¿Pertenece a alguna etnia?',
+            'field' => 'idpertenenciaetnica',
+            'class' => Pertenenciaetnica::class,
+            'expanded' => true,
+            'multiple' => false,
+        ],
+        15 => [
+            'label' => '¿Pertenece a algún grupo indígena?',
+            'field' => 'idgrupoindigena',
+            'class' => Grupoindigena::class,
+            'expanded' => true,
+            'multiple' => false,
+        ]
+    );
+
+
     /**
      * @var int
      *
@@ -36,162 +153,82 @@ class Datosfallecido
     private $fechadefuncion;
 
     /**
-     * @var \Administradoraseguridad
-     *
-     * @ORM\ManyToOne(targetEntity="Administradoraseguridad")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdAdministradoraSeguridad", referencedColumnName="IdAdministradoraSeguridad")
-     * })
+     * @ORM\Column(name="IdAdministradoraSeguridad", type="integer", length=11, nullable=false)
      */
     private $idadministradoraseguridad;
 
     /**
-     * @var \Probablemaneramuerte
-     *
-     * @ORM\ManyToOne(targetEntity="Probablemaneramuerte")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdProbableManeraMuerte", referencedColumnName="IdProbableManeraMuerte")
-     * })
+     * @ORM\Column(name="IdProbableManeraMuerte", type="integer", length=11, nullable=false)
      */
     private $idprobablemaneramuerte;
 
     /**
-     * @var \Regimenseguridad
-     *
-     * @ORM\ManyToOne(targetEntity="Regimenseguridad")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdRegimenSeguridad", referencedColumnName="IdRegimenSeguridad")
-     * })
+     * @ORM\Column(name="IdRegimenSeguridad", type="integer", length=11, nullable=false)
      */
     private $idregimenseguridad;
 
     /**
-     * @var \Sexo
-     *
-     * @ORM\ManyToOne(targetEntity="Sexo")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdSexo", referencedColumnName="IdSexo")
-     * })
+     * @ORM\Column(name="IdSexo", type="integer", length=11, nullable=false)
      */
     private $idsexo;
 
     /**
-     * @var \Sitiodefuncion
-     *
-     * @ORM\ManyToOne(targetEntity="Sitiodefuncion")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdSitioDefuncion", referencedColumnName="IdSitioDefuncion")
-     * })
+     * @ORM\Column(name="IdSitioDefuncion", type="integer", length=11, nullable=false)
      */
     private $idsitiodefuncion;
 
     /**
-     * @var \Tipodefuncion
-     *
-     * @ORM\ManyToOne(targetEntity="Tipodefuncion")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdTipoDefuncion", referencedColumnName="IdTipoDefuncion")
-     * })
+     * @ORM\Column(name="IdTipoDefuncion", type="integer", length=11, nullable=false)
      */
     private $idtipodefuncion;
 
     /**
-     * @var \Tipodocumento
-     *
-     * @ORM\ManyToOne(targetEntity="Tipodocumento")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdTipoDocumento", referencedColumnName="IdTipoDocumento")
-     * })
+     * @ORM\Column(name="IdTipoDocumento", type="integer", length=11, nullable=false)
      */
     private $idtipodocumento;
 
     /**
-     * @var \Municipio
-     *
-     * @ORM\ManyToOne(targetEntity="Municipio")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdMunicipio", referencedColumnName="IdMunicipio")
-     * })
+     * @ORM\Column(name="IdMunicipio", type="integer", length=11, nullable=false)
      */
     private $idmunicipio;
 
     /**
-     * @var \Causadirecta
-     *
-     * @ORM\ManyToOne(targetEntity="Causadirecta")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdCausaDirecta", referencedColumnName="IdCausaDirecta")
-     * })
+     * @ORM\Column(name="IdCausaDirecta", type="integer", length=11, nullable=false)
      */
     private $idcausadirecta;
 
     /**
-     * @var \Estadocivil
-     *
-     * @ORM\ManyToOne(targetEntity="Estadocivil")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdEstadoCivil", referencedColumnName="IdEstadoCivil")
-     * })
+     * @ORM\Column(name="IdEstadoCivil", type="integer", length=11, nullable=false)
      */
     private $idestadocivil;
 
     /**
-     * @var \Grupoindigena
-     *
-     * @ORM\ManyToOne(targetEntity="Grupoindigena")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdGrupoIndigena", referencedColumnName="IdGrupoIndigena")
-     * })
+     * @ORM\Column(name="IdGrupoIndigena", type="integer", length=11, nullable=false)
      */
     private $idgrupoindigena;
 
     /**
-     * @var \Institucion
-     *
-     * @ORM\ManyToOne(targetEntity="Institucion")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdInstitucion", referencedColumnName="IdInstitucion")
-     * })
+     * @ORM\Column(name="IdInstitucion", type="integer", length=11, nullable=false)
      */
     private $idinstitucion;
 
     /**
-     * @var \Niveleducativo
-     *
-     * @ORM\ManyToOne(targetEntity="Niveleducativo")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdNivelEducativo", referencedColumnName="IdNivelEducativo")
-     * })
+     * @ORM\Column(name="IdNivelEducativo", type="integer", length=11, nullable=false)
      */
     private $idniveleducativo;
 
     /**
-     * @var \Area
-     *
-     * @ORM\ManyToOne(targetEntity="Area")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdNombreArea", referencedColumnName="IdArea")
-     * })
+     * @ORM\Column(name="IdNombreArea", type="integer", length=11, nullable=false)
      */
     private $idnombrearea;
 
     /**
-     * @var \Ocupacion
-     *
-     * @ORM\ManyToOne(targetEntity="Ocupacion")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdOcupacion", referencedColumnName="IdOcupacion")
-     * })
+     * @ORM\Column(name="IdOcupacion", type="integer", length=11, nullable=false)
      */
     private $idocupacion;
 
     /**
-     * @var \Pertenenciaetnica
-     *
-     * @ORM\ManyToOne(targetEntity="Pertenenciaetnica")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="IdPertenenciaEtnica", referencedColumnName="IdPertenenciaEtnica")
-     * })
+     * @ORM\Column(name="IdPertenenciaEtnica", type="integer", length=11, nullable=false)
      */
     private $idpertenenciaetnica;
 
@@ -224,192 +261,192 @@ class Datosfallecido
         return $this;
     }
 
-    public function getIdadministradoraseguridad(): ?Administradoraseguridad
+    public function getIdadministradoraseguridad(): ?int
     {
         return $this->idadministradoraseguridad;
     }
 
-    public function setIdadministradoraseguridad(?Administradoraseguridad $idadministradoraseguridad): self
+    public function setIdadministradoraseguridad(int $idadministradoraseguridad): self
     {
         $this->idadministradoraseguridad = $idadministradoraseguridad;
 
         return $this;
     }
 
-    public function getIdprobablemaneramuerte(): ?Probablemaneramuerte
+    public function getIdprobablemaneramuerte(): ?int
     {
         return $this->idprobablemaneramuerte;
     }
 
-    public function setIdprobablemaneramuerte(?Probablemaneramuerte $idprobablemaneramuerte): self
+    public function setIdprobablemaneramuerte(?int $idprobablemaneramuerte): self
     {
         $this->idprobablemaneramuerte = $idprobablemaneramuerte;
 
         return $this;
     }
 
-    public function getIdregimenseguridad(): ?Regimenseguridad
+    public function getIdregimenseguridad(): ?int
     {
         return $this->idregimenseguridad;
     }
 
-    public function setIdregimenseguridad(?Regimenseguridad $idregimenseguridad): self
+    public function setIdregimenseguridad(?int $idregimenseguridad): self
     {
         $this->idregimenseguridad = $idregimenseguridad;
 
         return $this;
     }
 
-    public function getIdsexo(): ?Sexo
+    public function getIdsexo(): ?int
     {
         return $this->idsexo;
     }
 
-    public function setIdsexo(?Sexo $idsexo): self
+    public function setIdsexo(?int $idsexo): self
     {
         $this->idsexo = $idsexo;
 
         return $this;
     }
 
-    public function getIdsitiodefuncion(): ?Sitiodefuncion
+    public function getIdsitiodefuncion(): ?int
     {
         return $this->idsitiodefuncion;
     }
 
-    public function setIdsitiodefuncion(?Sitiodefuncion $idsitiodefuncion): self
+    public function setIdsitiodefuncion(?int $idsitiodefuncion): self
     {
         $this->idsitiodefuncion = $idsitiodefuncion;
 
         return $this;
     }
 
-    public function getIdtipodefuncion(): ?Tipodefuncion
+    public function getIdtipodefuncion(): ?int
     {
         return $this->idtipodefuncion;
     }
 
-    public function setIdtipodefuncion(?Tipodefuncion $idtipodefuncion): self
+    public function setIdtipodefuncion(?int $idtipodefuncion): self
     {
         $this->idtipodefuncion = $idtipodefuncion;
 
         return $this;
     }
 
-    public function getIdtipodocumento(): ?Tipodocumento
+    public function getIdtipodocumento(): ?int
     {
         return $this->idtipodocumento;
     }
 
-    public function setIdtipodocumento(?Tipodocumento $idtipodocumento): self
+    public function setIdtipodocumento(?int $idtipodocumento): self
     {
         $this->idtipodocumento = $idtipodocumento;
 
         return $this;
     }
 
-    public function getIdmunicipio(): ?Municipio
+    public function getIdmunicipio(): ?int
     {
         return $this->idmunicipio;
     }
 
-    public function setIdmunicipio(?Municipio $idmunicipio): self
+    public function setIdmunicipio(?int $idmunicipio): self
     {
         $this->idmunicipio = $idmunicipio;
 
         return $this;
     }
 
-    public function getIdcausadirecta(): ?Causadirecta
+    public function getIdcausadirecta(): ?int
     {
         return $this->idcausadirecta;
     }
 
-    public function setIdcausadirecta(?Causadirecta $idcausadirecta): self
+    public function setIdcausadirecta(?int $idcausadirecta): self
     {
         $this->idcausadirecta = $idcausadirecta;
 
         return $this;
     }
 
-    public function getIdestadocivil(): ?Estadocivil
+    public function getIdestadocivil(): ?int
     {
         return $this->idestadocivil;
     }
 
-    public function setIdestadocivil(?Estadocivil $idestadocivil): self
+    public function setIdestadocivil(?int $idestadocivil): self
     {
         $this->idestadocivil = $idestadocivil;
 
         return $this;
     }
 
-    public function getIdgrupoindigena(): ?Grupoindigena
+    public function getIdgrupoindigena(): ?int
     {
         return $this->idgrupoindigena;
     }
 
-    public function setIdgrupoindigena(?Grupoindigena $idgrupoindigena): self
+    public function setIdgrupoindigena(?int $idgrupoindigena): self
     {
         $this->idgrupoindigena = $idgrupoindigena;
 
         return $this;
     }
 
-    public function getIdinstitucion(): ?Institucion
+    public function getIdinstitucion(): ?int
     {
         return $this->idinstitucion;
     }
 
-    public function setIdinstitucion(?Institucion $idinstitucion): self
+    public function setIdinstitucion(?int $idinstitucion): self
     {
         $this->idinstitucion = $idinstitucion;
 
         return $this;
     }
 
-    public function getIdniveleducativo(): ?Niveleducativo
+    public function getIdniveleducativo(): ?int
     {
         return $this->idniveleducativo;
     }
 
-    public function setIdniveleducativo(?Niveleducativo $idniveleducativo): self
+    public function setIdniveleducativo(?int $idniveleducativo): self
     {
         $this->idniveleducativo = $idniveleducativo;
 
         return $this;
     }
 
-    public function getIdnombrearea(): ?Area
+    public function getIdnombrearea(): ?int
     {
         return $this->idnombrearea;
     }
 
-    public function setIdnombrearea(?Area $idnombrearea): self
+    public function setIdnombrearea(?int $idnombrearea): self
     {
         $this->idnombrearea = $idnombrearea;
 
         return $this;
     }
 
-    public function getIdocupacion(): ?Ocupacion
+    public function getIdocupacion(): ?int
     {
         return $this->idocupacion;
     }
 
-    public function setIdocupacion(?Ocupacion $idocupacion): self
+    public function setIdocupacion(?int $idocupacion): self
     {
         $this->idocupacion = $idocupacion;
 
         return $this;
     }
 
-    public function getIdpertenenciaetnica(): ?Pertenenciaetnica
+    public function getIdpertenenciaetnica(): ?int
     {
         return $this->idpertenenciaetnica;
     }
 
-    public function setIdpertenenciaetnica(?Pertenenciaetnica $idpertenenciaetnica): self
+    public function setIdpertenenciaetnica(?int $idpertenenciaetnica): self
     {
         $this->idpertenenciaetnica = $idpertenenciaetnica;
 

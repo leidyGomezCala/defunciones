@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Departamento;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

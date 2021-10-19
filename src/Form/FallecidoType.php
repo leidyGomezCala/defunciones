@@ -6,30 +6,17 @@ use App\Entity\Datosfallecido;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 
 class FallecidoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('fechanacimientofallecido')
-            ->add('fechadefuncion')
-            ->add('idadministradoraseguridad')
-            ->add('idprobablemaneramuerte')
-            ->add('idregimenseguridad')
-            ->add('idsexo')
-            ->add('idsitiodefuncion')
-            ->add('idtipodefuncion')
-            ->add('idtipodocumento')
-            ->add('idmunicipio')
-            ->add('idcausadirecta')
-            ->add('idestadocivil')
-            ->add('idgrupoindigena')
-            ->add('idinstitucion')
-            ->add('idniveleducativo')
-            ->add('idnombrearea')
-            ->add('idocupacion')
-            ->add('idpertenenciaetnica')
+            ->add('fechanacimientofallecido',DateType::class)
+            ->add('fechadefuncion',DateType::class)
         ;
     }
 

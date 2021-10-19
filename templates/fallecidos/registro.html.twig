@@ -9,7 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-
-    {{ dump(fallecidos) }}
+    <h1>Registro</h1>
+    {% for message in app.flashes('exito') %}
+        <div class="alert alert-success">
+            {{message}}
+        </div>
+    {% endfor %}
+    {{ form(formulario) }}
 </div>
 {% endblock %}
