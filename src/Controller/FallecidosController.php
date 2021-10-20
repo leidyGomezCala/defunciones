@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Datosfallecido;
+use App\Repository\DatosfallecidoRepository;
 use App\Entity\Administradoraseguridad;
 use App\Entity\Sitiodefuncion;
 use App\Entity\Institucion;
@@ -24,16 +25,18 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class FallecidosController extends AbstractController
 {
 
+    
     /**
      * @Route("/fallecidos", name="fallecidos")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, DatosfallecidoRepository $datosfallecidoRepository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $fallecidos = $em->getRepository(Datosfallecido::class)->findAll();
-
-        return $this->render('fallecidos/index.html.twig',            [
-            'fallecidos' => $fallecidos
+        $getTime = time();
+        $fallecidos = $datosfallecidoRepository->findByDatosFallecidos();
+        $getTime = time() - $getTime;
+        return $this->render('fallecidos/index.html.twig',[
+            'fallecidos' => $fallecidos,
+            'duration' => $getTime
         ]);
     }
 
