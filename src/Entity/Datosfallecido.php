@@ -2,15 +2,17 @@
 
 namespace App\Entity;
 
+use App\Repository\DatosfallecidoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ORM\Entity(repositoryClass=DatosfallecidoRepository::class)
  * Datosfallecido
- *
  * @ORM\Table(name="datosfallecido", indexes={@ORM\Index(name="IdMunicipio", columns={"IdMunicipio"}), @ORM\Index(name="IdSitioDefuncion", columns={"IdSitioDefuncion"}), @ORM\Index(name="IdProbableManeraMuerte", columns={"IdProbableManeraMuerte"}), @ORM\Index(name="IdNombreArea", columns={"IdNombreArea"}), @ORM\Index(name="IdGrupoIndigena", columns={"IdGrupoIndigena"}), @ORM\Index(name="IdAdministradoraSeguridad", columns={"IdAdministradoraSeguridad"}), @ORM\Index(name="IdTipoDefuncion", columns={"IdTipoDefuncion"}), @ORM\Index(name="IdRegimenSeguridad", columns={"IdRegimenSeguridad"}), @ORM\Index(name="IdOcupacion", columns={"IdOcupacion"}), @ORM\Index(name="IdInstitucion", columns={"IdInstitucion"}), @ORM\Index(name="IdCausaDirecta", columns={"IdCausaDirecta"}), @ORM\Index(name="IdTipoDocumento", columns={"IdTipoDocumento"}), @ORM\Index(name="IdSexo", columns={"IdSexo"}), @ORM\Index(name="IdPertenenciaEtnica", columns={"IdPertenenciaEtnica"}), @ORM\Index(name="IdNivelEducativo", columns={"IdNivelEducativo"}), @ORM\Index(name="IdEstadoCivil", columns={"IdEstadoCivil"})})
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
-class Datosfallecido
+class Datosfallecido 
 {
 
     const SELECTFIELD = array(
@@ -278,7 +280,7 @@ class Datosfallecido
         return $this->idprobablemaneramuerte;
     }
 
-    public function setIdprobablemaneramuerte(?int $idprobablemaneramuerte): self
+    public function setIdprobablemaneramuerte(int $idprobablemaneramuerte): self
     {
         $this->idprobablemaneramuerte = $idprobablemaneramuerte;
 
@@ -290,7 +292,7 @@ class Datosfallecido
         return $this->idregimenseguridad;
     }
 
-    public function setIdregimenseguridad(?int $idregimenseguridad): self
+    public function setIdregimenseguridad(int $idregimenseguridad): self
     {
         $this->idregimenseguridad = $idregimenseguridad;
 
@@ -302,7 +304,7 @@ class Datosfallecido
         return $this->idsexo;
     }
 
-    public function setIdsexo(?int $idsexo): self
+    public function setIdsexo(int $idsexo): self
     {
         $this->idsexo = $idsexo;
 
@@ -314,7 +316,7 @@ class Datosfallecido
         return $this->idsitiodefuncion;
     }
 
-    public function setIdsitiodefuncion(?int $idsitiodefuncion): self
+    public function setIdsitiodefuncion(int $idsitiodefuncion): self
     {
         $this->idsitiodefuncion = $idsitiodefuncion;
 
@@ -326,7 +328,7 @@ class Datosfallecido
         return $this->idtipodefuncion;
     }
 
-    public function setIdtipodefuncion(?int $idtipodefuncion): self
+    public function setIdtipodefuncion(int $idtipodefuncion): self
     {
         $this->idtipodefuncion = $idtipodefuncion;
 
@@ -338,7 +340,7 @@ class Datosfallecido
         return $this->idtipodocumento;
     }
 
-    public function setIdtipodocumento(?int $idtipodocumento): self
+    public function setIdtipodocumento(int $idtipodocumento): self
     {
         $this->idtipodocumento = $idtipodocumento;
 
@@ -350,7 +352,7 @@ class Datosfallecido
         return $this->idmunicipio;
     }
 
-    public function setIdmunicipio(?int $idmunicipio): self
+    public function setIdmunicipio(int $idmunicipio): self
     {
         $this->idmunicipio = $idmunicipio;
 
@@ -362,7 +364,7 @@ class Datosfallecido
         return $this->idcausadirecta;
     }
 
-    public function setIdcausadirecta(?int $idcausadirecta): self
+    public function setIdcausadirecta(int $idcausadirecta): self
     {
         $this->idcausadirecta = $idcausadirecta;
 
@@ -374,7 +376,7 @@ class Datosfallecido
         return $this->idestadocivil;
     }
 
-    public function setIdestadocivil(?int $idestadocivil): self
+    public function setIdestadocivil(int $idestadocivil): self
     {
         $this->idestadocivil = $idestadocivil;
 
@@ -386,7 +388,7 @@ class Datosfallecido
         return $this->idgrupoindigena;
     }
 
-    public function setIdgrupoindigena(?int $idgrupoindigena): self
+    public function setIdgrupoindigena(int $idgrupoindigena): self
     {
         $this->idgrupoindigena = $idgrupoindigena;
 
@@ -398,7 +400,7 @@ class Datosfallecido
         return $this->idinstitucion;
     }
 
-    public function setIdinstitucion(?int $idinstitucion): self
+    public function setIdinstitucion(int $idinstitucion): self
     {
         $this->idinstitucion = $idinstitucion;
 
@@ -410,7 +412,7 @@ class Datosfallecido
         return $this->idniveleducativo;
     }
 
-    public function setIdniveleducativo(?int $idniveleducativo): self
+    public function setIdniveleducativo(int $idniveleducativo): self
     {
         $this->idniveleducativo = $idniveleducativo;
 
@@ -422,7 +424,7 @@ class Datosfallecido
         return $this->idnombrearea;
     }
 
-    public function setIdnombrearea(?int $idnombrearea): self
+    public function setIdnombrearea(int $idnombrearea): self
     {
         $this->idnombrearea = $idnombrearea;
 
@@ -434,7 +436,7 @@ class Datosfallecido
         return $this->idocupacion;
     }
 
-    public function setIdocupacion(?int $idocupacion): self
+    public function setIdocupacion(int $idocupacion): self
     {
         $this->idocupacion = $idocupacion;
 
@@ -446,12 +448,15 @@ class Datosfallecido
         return $this->idpertenenciaetnica;
     }
 
-    public function setIdpertenenciaetnica(?int $idpertenenciaetnica): self
+    public function setIdpertenenciaetnica(int $idpertenenciaetnica): self
     {
         $this->idpertenenciaetnica = $idpertenenciaetnica;
 
         return $this;
     }
+
+
+
 
 
 }
