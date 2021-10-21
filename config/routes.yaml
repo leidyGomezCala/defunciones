@@ -7,3 +7,6 @@ showById:
 editFallecido:
     path: /editFallecido/{id}
     controller: App\Controller\FallecidosController::editFallecido
+showFallecidoByMun:
+    path: /{idmunicipio}
+    controller: App\Controller\FallecidosController::showFallecidoByMun
