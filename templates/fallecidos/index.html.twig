@@ -63,10 +63,10 @@ endblock %} {% block body %}
                   {{ fallecido.administradora }}
                 </td>
                 <td>
-                  <a href="#" class="btn btn-success">Ver</a>
+                  <a href="/fallecido/{{fallecido.id_fallecido}}" class="btn btn-success">Ver</a>
                 </td>
                 <td>
-                  <a href="#" class="btn btn-danger">Editar</a>
+                  <a href="/editFallecido/{{fallecido.id_fallecido}}" class="btn btn-danger">Editar</a>
                 </td>
               </tr>
               {% endfor %}
@@ -88,5 +88,16 @@ endblock %} {% block body %}
           </table>
         </div>
       </div>
-<script></script>
+<script>
+
+  let tableDataFallecidos = $('#tableDataFallecidos').DataTable({
+    "ordering": false,
+    "columnDefs": [
+    ],
+    "language": {
+      "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json",
+    }
+  });
+
+</script>
 {% endblock %}
