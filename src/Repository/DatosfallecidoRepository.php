@@ -34,10 +34,10 @@ class DatosfallecidoRepository extends ServiceEntityRepository
     *  @return Datosfallecido[]
     */
 
-    public function showDataFallecidos(){
+    public function showDataFallecidos($id){
         $arrDatos = array();
         $conn = DriverManager::getConnection(DatosfallecidoRepository::CONNECTIONPARAMS);
-        $sql = 'SELECT round(datediff(FechaDefuncion,FechaNacimientoFallecido)/365)as edad, caudir.CausaDirecta as Causa_directa, probmanmuer.ProbableManeraMuerte as Causa_probable, tipodef.TipoDefuncion as tipo_defuncion, inst.NombreInstitucion as institucion, sitiodef.SitioDefuncion as sitio_defuncion, sexo.Sexo as genero, mun.NombreMunicipio as municipio, ar.NombreArea as area, tipoDoc.TipoDocumento as tipo_documento, estcivil.EstadoCivil as estado_civil, niveledu.NivelEducativo as nivel_educativo, ocu.Ocupacion as ocupacion,  regseg.RegimenSeguridad as regimen_seguridad, adminseg.NombreAdministradora as administradora, pertetnica.PertenenciaEtnica as pertenecia_etnica, grupoind.GrupoIndigena as grupo_indigena
+        $sql = 'SELECT dp.IdDatosFallecido as id_fallecido, round(datediff(FechaDefuncion,FechaNacimientoFallecido)/365)as edad, caudir.CausaDirecta as Causa_directa, probmanmuer.ProbableManeraMuerte as Causa_probable, tipodef.TipoDefuncion as tipo_defuncion, inst.NombreInstitucion as institucion, sitiodef.SitioDefuncion as sitio_defuncion, sexo.Sexo as genero, mun.NombreMunicipio as municipio, ar.NombreArea as area, tipoDoc.TipoDocumento as tipo_documento, estcivil.EstadoCivil as estado_civil, niveledu.NivelEducativo as nivel_educativo, ocu.Ocupacion as ocupacion,  regseg.RegimenSeguridad as regimen_seguridad, adminseg.NombreAdministradora as administradora, pertetnica.PertenenciaEtnica as pertenecia_etnica, grupoind.GrupoIndigena as grupo_indigena
         FROM datosfallecido dp
         INNER JOIN administradoraseguridad adminseg on dp.IdAdministradoraSeguridad = adminseg.IdAdministradoraSeguridad
         INNER JOIN tipodocumento tipoDoc on dp.IdTipoDocumento = tipoDoc.IdTipoDocumento
@@ -54,8 +54,10 @@ class DatosfallecidoRepository extends ServiceEntityRepository
         INNER JOIN ocupacion ocu on dp.IdOcupacion  = ocu.IdOcupacion 
         INNER JOIN regimenseguridad regseg on dp.IdRegimenSeguridad  = regseg.IdRegimenSeguridad 
         INNER JOIN pertenenciaetnica pertetnica on dp.IdPertenenciaEtnica  = pertetnica.IdPertenenciaEtnica 
-        INNER JOIN grupoindigena grupoind on dp.IdGrupoIndigena  = grupoind.IdGrupoIndigena';
-        $stmt = $conn->prepare($sql);        
+        INNER JOIN grupoindigena grupoind on dp.IdGrupoIndigena  = grupoind.IdGrupoIndigena
+        WHERE dp.IdDatosFallecido = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1,$id);       
         $result = $stmt->executeQuery();
         foreach ($result->fetchAllAssociative() as $row) {
             array_push($arrDatos, $row);
@@ -66,7 +68,7 @@ class DatosfallecidoRepository extends ServiceEntityRepository
     {
         $arrDatos = array();
         $conn = DriverManager::getConnection(DatosfallecidoRepository::CONNECTIONPARAMS);
-        $sql = 'SELECT round(datediff(FechaDefuncion,FechaNacimientoFallecido)/365)as edad, caudir.CausaDirecta as Causa_directa, tipodef.TipoDefuncion as tipo_defuncion, inst.NombreInstitucion as institucion, sitiodef.SitioDefuncion as sitio_defuncion, sexo.Sexo as genero, mun.NombreMunicipio as municipio, adminseg.NombreAdministradora as administradora
+        $sql = 'SELECT dp.IdDatosFallecido as id_fallecido, round(datediff(FechaDefuncion,FechaNacimientoFallecido)/365)as edad, caudir.CausaDirecta as Causa_directa, tipodef.TipoDefuncion as tipo_defuncion, inst.NombreInstitucion as institucion, sitiodef.SitioDefuncion as sitio_defuncion, sexo.Sexo as genero, mun.NombreMunicipio as municipio, adminseg.NombreAdministradora as administradora
         FROM datosfallecido dp
         INNER JOIN administradoraseguridad adminseg on dp.IdAdministradoraSeguridad = adminseg.IdAdministradoraSeguridad
         INNER JOIN sexo sexo on dp.IdSexo = sexo.IdSexo
