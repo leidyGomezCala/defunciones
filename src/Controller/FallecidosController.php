@@ -27,16 +27,55 @@ class FallecidosController extends AbstractController
 
     
     /**
-     * @Route("/fallecidos", name="fallecidos")
+     * @Route("/", name="fallecidos")
      */
     public function index(Request $request, DatosfallecidoRepository $datosfallecidoRepository): Response
     {
         $getTime = time();
-        $fallecidos = $datosfallecidoRepository->findByDatosFallecidos();
+        $fallecidos = $datosfallecidoRepository->findByDatosFallecidos();$fallecidos = $datosfallecidoRepository->findByDatosFallecidos();
         $getTime = time() - $getTime;
         return $this->render('fallecidos/index.html.twig',[
             'fallecidos' => $fallecidos,
             'duration' => $getTime
+        ]);
+    }
+
+    /*
+    * @Route("/fallecidos/{id}", name="verFallecido")
+    */
+
+    public function showById(Request $request, int $id, DatosfallecidoRepository $datosfallecidoRepository)
+    {
+        $fallecido = $datosfallecidoRepository->showDataFallecidos($id);
+        return $this->render('fallecidos/show.html.twig',[
+            'fallecido' => $fallecido,
+        ]);
+    }
+
+    /*
+    * @Route("/editFallecido/{id}", name="verFallecido")
+    */
+
+    public function editFallecido(Request $request, int $id, DatosfallecidoRepository $datosfallecidoRepository)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $objFallecido = new Datosfallecido();
+        $formFallecido = $this->createForm(FallecidoType::class, $objFallecido);
+        $objFallecido = $em->getRepository(Datosfallecido::class)->find($id);
+
+        //$fallecido = $datosfallecidoRepository->showDataFallecidos($id);
+
+        $this->arrFields($em, $formFallecido);
+        $this->addField($formFallecido, 'Registrar', SubmitType::class, []);
+        $this->fillForm($formFallecido,$objFallecido);
+        $formFallecido->handleRequest($request);
+        if($formFallecido->isSubmitted() && $formFallecido->isValid()){
+            $this->registerDeath($em, $formFallecido, $objFallecido);
+            return $this->redirectToRoute('fallecidos');
+        }
+
+        return $this->render('fallecidos/edit.html.twig',[
+            'formulario' => $formFallecido->createView()
         ]);
     }
 
@@ -55,7 +94,7 @@ class FallecidosController extends AbstractController
         $formFallecido->handleRequest($request);
         if ($formFallecido->isSubmitted()) {
             $this->registerDeath($em, $formFallecido, $fallecido);
-            return $this->redirectToRoute('registroFallecido');
+            return $this->redirectToRoute('fallecidos');
         }
 
         return $this->render('fallecidos/registro.html.twig',            [
@@ -73,6 +112,8 @@ class FallecidosController extends AbstractController
 
     public function setValue($form, $fallecido)
     {
+        $fallecido->setFechanacimientofallecido($form['fechanacimientofallecido']->getData());
+        $fallecido->setFechadefuncion($form['fechadefuncion']->getData());
         $fallecido->setIdadministradoraseguridad($form['idadministradoraseguridad']->getData());
         $fallecido->setIdprobablemaneramuerte($form['idprobablemaneramuerte']->getData());
         $fallecido->setIdsitiodefuncion($form['idsitiodefuncion']->getData());
@@ -179,5 +220,27 @@ class FallecidosController extends AbstractController
     public function addField($form, string $fieldName, $fieldType, array $arrOptions = null)
     {
         $form->add($fieldName, $fieldType, $arrOptions);
+    }
+
+    public function fillForm($formFallecido, $dataFallecido)
+    {
+        $formFallecido['fechanacimientofallecido']->setData($dataFallecido->getFechanacimientofallecido());
+        $formFallecido['fechadefuncion']->setData($dataFallecido->getFechadefuncion());
+        $formFallecido['idadministradoraseguridad']->setData($dataFallecido->getIdadministradoraseguridad());
+        $formFallecido['idprobablemaneramuerte']->setData($dataFallecido->getIdprobablemaneramuerte());
+        $formFallecido['idsitiodefuncion']->setData($dataFallecido->getIdsitiodefuncion());
+        $formFallecido['idocupacion']->setData($dataFallecido->getIdocupacion());
+        $formFallecido['idtipodocumento']->setData($dataFallecido->getIdtipodocumento());
+        $formFallecido['idmunicipio']->setData($dataFallecido->getIdmunicipio());
+        $formFallecido['idcausadirecta']->setData($dataFallecido->getIdcausadirecta());
+        $formFallecido['idestadocivil']->setData($dataFallecido->getIdestadocivil());
+        $formFallecido['idinstitucion']->setData($dataFallecido->getIdinstitucion());
+        $formFallecido['idniveleducativo']->setData($dataFallecido->getIdniveleducativo());
+        $formFallecido['idsexo']->setData($dataFallecido->getIdsexo());
+        $formFallecido['idtipodefuncion']->setData($dataFallecido->getIdtipodefuncion());
+        $formFallecido['IdNombreArea']->setData($dataFallecido->getIdnombrearea());
+        $formFallecido['idregimenseguridad']->setData($dataFallecido->getIdregimenseguridad());
+        $formFallecido['idpertenenciaetnica']->setData($dataFallecido->getIdpertenenciaetnica());
+        $formFallecido['idgrupoindigena']->setData($dataFallecido->getIdgrupoindigena());
     }
 }
