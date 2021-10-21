@@ -39,11 +39,9 @@ class FallecidosController extends AbstractController
             'duration' => $getTime
         ]);
     }
-
     /*
     * @Route("/fallecidos/{id}", name="verFallecido")
     */
-
     public function showById(Request $request, int $id, DatosfallecidoRepository $datosfallecidoRepository)
     {
         $fallecido = $datosfallecidoRepository->showDataFallecidos($id);
@@ -51,12 +49,11 @@ class FallecidosController extends AbstractController
             'fallecido' => $fallecido,
         ]);
     }
-
     /*
     * @Route("/editFallecido/{id}", name="verFallecido")
     */
 
-    public function editFallecido(Request $request, int $id, DatosfallecidoRepository $datosfallecidoRepository)
+    public function editFallecido(Request $request, int $id)
     {
         $em = $this->getDoctrine()->getManager();
         $objFallecido = new Datosfallecido();
@@ -66,7 +63,7 @@ class FallecidosController extends AbstractController
         //$fallecido = $datosfallecidoRepository->showDataFallecidos($id);
 
         $this->arrFields($em, $formFallecido);
-        $this->addField($formFallecido, 'Registrar', SubmitType::class, []);
+        $this->addField($formFallecido, 'Editar', SubmitType::class, []);
         $this->fillForm($formFallecido,$objFallecido);
         $formFallecido->handleRequest($request);
         if($formFallecido->isSubmitted() && $formFallecido->isValid()){
@@ -78,7 +75,6 @@ class FallecidosController extends AbstractController
             'formulario' => $formFallecido->createView()
         ]);
     }
-
     /**
      * @Route("/registroFallecido", name="registroFallecido")
      */
@@ -107,7 +103,7 @@ class FallecidosController extends AbstractController
         $this->setValue($form, $fallecido);
         $em->persist($fallecido);
         $em->flush();
-        $this->addFlash('exito', 'Defunción registrada');
+        //$this->addFlash('exito', 'Defunción registrada');
     }
 
     public function setValue($form, $fallecido)
@@ -142,6 +138,7 @@ class FallecidosController extends AbstractController
     public function fillSelector($em,  $form, $class, $label, $field, $expanded, $multiple)
     {
         $queryData = $em->getRepository($class)->findAll();
+        if($field == 'idmunicipio') $queryData = $em->getRepository(Municipio::class)->findBy(['iddepartamento' => 1]);
         $arrOptions = $this->arrOptions($label, $expanded, $multiple);
         for ($i = 0; $i < count($queryData); $i++) {
             $arrOptions['choices'] += $this->selectField($field, $queryData, $i);
