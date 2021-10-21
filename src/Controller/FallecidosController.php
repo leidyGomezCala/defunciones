@@ -29,30 +29,34 @@ class FallecidosController extends AbstractController
     /**
      * @Route("/", name="fallecidos")
      */
-    public function index(Request $request, DatosfallecidoRepository $datosfallecidoRepository): Response
+    public function index( DatosfallecidoRepository $datosfallecidoRepository): Response
     {
         $getTime = time();
-        $fallecidos = $datosfallecidoRepository->findByDatosFallecidos();$fallecidos = $datosfallecidoRepository->findByDatosFallecidos();
+        $em = $this->getDoctrine()->getManager();
+        $fallecidos = $datosfallecidoRepository->findByDatosFallecidos();
         $getTime = time() - $getTime;
+        $municipios = $em->getRepository(Municipio::class)->findBy(['iddepartamento' => 1]);
         return $this->render('fallecidos/index.html.twig',[
             'fallecidos' => $fallecidos,
-            'duration' => $getTime
+            'duration' => $getTime,
+            'municipios' => $municipios
         ]);
     }
+
     /*
     * @Route("/fallecidos/{id}", name="verFallecido")
     */
-    public function showById(Request $request, int $id, DatosfallecidoRepository $datosfallecidoRepository)
+    public function showById(int $id, DatosfallecidoRepository $datosfallecidoRepository)
     {
         $fallecido = $datosfallecidoRepository->showDataFallecidos($id);
         return $this->render('fallecidos/show.html.twig',[
             'fallecido' => $fallecido,
         ]);
     }
+
     /*
     * @Route("/editFallecido/{id}", name="verFallecido")
     */
-
     public function editFallecido(Request $request, int $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -75,6 +79,7 @@ class FallecidosController extends AbstractController
             'formulario' => $formFallecido->createView()
         ]);
     }
+
     /**
      * @Route("/registroFallecido", name="registroFallecido")
      */
@@ -95,6 +100,20 @@ class FallecidosController extends AbstractController
 
         return $this->render('fallecidos/registro.html.twig',            [
             'formulario' => $formFallecido->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{idmunicipio}", name="showFallecidoByMun")
+     */
+    public function showFallecidoByMun(int $idmunicipio, DatosfallecidoRepository $datosfallecidoRepository)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fallecidos = $datosfallecidoRepository->findByDatosFallecidosByMun($idmunicipio);
+        $municipios = $em->getRepository(Municipio::class)->findBy(['iddepartamento' => 1]);
+        return $this->render('fallecidos/index.html.twig',[
+            'fallecidos' => $fallecidos,
+            'municipios' => $municipios
         ]);
     }
 
