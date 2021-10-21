@@ -57,12 +57,12 @@ class Municipio
         return $this;
     }
 
-    public function getIddepartamento(): ?Departamento
+    public function getIddepartamento()
     {
         return $this->iddepartamento;
     }
 
-    public function setIddepartamento(?Departamento $iddepartamento): self
+    public function setIddepartamento( $iddepartamento): self
     {
         $this->iddepartamento = $iddepartamento;
 
