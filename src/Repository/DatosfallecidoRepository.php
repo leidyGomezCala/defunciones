@@ -64,6 +64,7 @@ class DatosfallecidoRepository extends ServiceEntityRepository
         }
         return $arrDatos;
     }
+
     public function findByDatosFallecidos()
     {
         $arrDatos = array();
@@ -78,6 +79,29 @@ class DatosfallecidoRepository extends ServiceEntityRepository
         INNER JOIN institucion inst on dp.IdInstitucion  = inst.IdInstitucion 
         INNER JOIN causadirecta caudir on dp.IdCausaDirecta  = caudir.IdCausaDirecta';
         $stmt = $conn->prepare($sql);        
+        $result = $stmt->executeQuery();
+        foreach ($result->fetchAllAssociative() as $row) {
+            array_push($arrDatos, $row);
+        }
+        return $arrDatos;
+    }
+
+    public function findByDatosFallecidosByMun($idmunicipio)
+    {
+        $arrDatos = array();
+        $conn = DriverManager::getConnection(DatosfallecidoRepository::CONNECTIONPARAMS);
+        $sql = 'SELECT dp.IdDatosFallecido as id_fallecido, round(datediff(FechaDefuncion,FechaNacimientoFallecido)/365)as edad, caudir.CausaDirecta as Causa_directa, tipodef.TipoDefuncion as tipo_defuncion, inst.NombreInstitucion as institucion, sitiodef.SitioDefuncion as sitio_defuncion, sexo.Sexo as genero, mun.NombreMunicipio as municipio, adminseg.NombreAdministradora as administradora
+        FROM datosfallecido dp
+        INNER JOIN administradoraseguridad adminseg on dp.IdAdministradoraSeguridad = adminseg.IdAdministradoraSeguridad
+        INNER JOIN sexo sexo on dp.IdSexo = sexo.IdSexo
+        INNER JOIN municipio mun on dp.IdMunicipio = mun.IdMunicipio
+        INNER JOIN sitiodefuncion sitiodef on dp.IdSitioDefuncion  = sitiodef.IdSitioDefuncion 
+        INNER JOIN tipodefuncion tipodef on dp.IdTipoDefuncion  = tipodef.IdTipoDefuncion 
+        INNER JOIN institucion inst on dp.IdInstitucion  = inst.IdInstitucion 
+        INNER JOIN causadirecta caudir on dp.IdCausaDirecta  = caudir.IdCausaDirecta
+        WHERE mun.IdMunicipio = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1,$idmunicipio);       
         $result = $stmt->executeQuery();
         foreach ($result->fetchAllAssociative() as $row) {
             array_push($arrDatos, $row);
